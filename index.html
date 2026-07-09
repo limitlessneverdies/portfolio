@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bishowdeep Bhusal</title>
+<meta name="description" content="Self-taught builder. Hardware, Python, IoT. I break things to understand them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --c-bg:#0c0c0e;
+    --c-surface:#141416;
+    --c-border:#222225;
+    --c-border-h:#333338;
+    --c-text:#ececef;
+    --c-text-2:#8e8e96;
+    --c-text-3:#55555e;
+    --c-accent:#2dd4a0;
+    --c-accent-dim:rgba(45,212,160,.08);
+    --c-accent-mid:rgba(45,212,160,.15);
+    --font-body:'Inter',system-ui,-apple-system,sans-serif;
+    --font-display:'Space Grotesk',system-ui,sans-serif;
+    --font-mono:'JetBrains Mono',monospace;
+    --max-w:720px;
+    --side:clamp(1.5rem,5vw,3rem);
+  }
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--font-body);
+    background:var(--c-bg);
+    color:var(--c-text);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--c-accent);color:var(--c-bg)}
+
+  /* ---- NAV ---- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    padding:.9rem var(--side);
+    display:flex;justify-content:space-between;align-items:center;
+    background:rgba(12,12,14,.8);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--c-border);
+  }
+  .nav-name{
+    font-family:var(--font-display);font-weight:600;font-size:.95rem;
+    color:var(--c-text);letter-spacing:-.02em;
+  }
+  .nav-links{display:flex;gap:1.8rem}
+  .nav-links a{
+    font-size:.78rem;font-weight:500;color:var(--c-text-3);
+    text-decoration:none;transition:color .2s;letter-spacing:.02em;
+  }
+  .nav-links a:hover{color:var(--c-text)}
+
+  /* ---- LAYOUT ---- */
+  .wrap{max-width:var(--max-w);margin:0 auto;padding:0 var(--side)}
+
+  /* ---- HERO ---- */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;
+    justify-content:center;padding-top:5rem;
+  }
+  .hero-tag{
+    font-family:var(--font-mono);font-size:.7rem;font-weight:500;
+    color:var(--c-accent);letter-spacing:.08em;
+    text-transform:uppercase;margin-bottom:1.8rem;
+    display:flex;align-items:center;gap:.6rem;
+  }
+  .hero-tag::before{
+    content:'';width:5px;height:5px;border-radius:50%;
+    background:var(--c-accent);
+    animation:blink 2.4s ease infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+  .hero h1{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(2.4rem,5.5vw,3.6rem);
+    line-height:1.12;letter-spacing:-.035em;
+    margin-bottom:1.6rem;
+  }
+  .hero h1 .hl{
+    background:linear-gradient(135deg,var(--c-accent),#5eead4);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .hero h1 .m{color:var(--c-text-3)}
+  .hero-sub{
+    font-size:1.05rem;color:var(--c-text-2);max-width:520px;
+    line-height:1.85;margin-bottom:2.5rem;
+  }
+  .hero-row{display:flex;gap:.6rem;flex-wrap:wrap}
+  .h-chip{
+    padding:.6rem 1.2rem;background:var(--c-surface);
+    border:1px solid var(--c-border);border-radius:8px;
+    transition:border-color .2s;
+  }
+  .h-chip:hover{border-color:var(--c-border-h)}
+  .h-chip-n{
+    font-family:var(--font-display);font-weight:700;
+    font-size:1.1rem;color:var(--c-accent);line-height:1;
+  }
+  .h-chip-l{
+    font-size:.62rem;color:var(--c-text-3);text-transform:uppercase;
+    letter-spacing:.1em;margin-top:.2rem;
+  }
+
+  /* ---- SECTION ---- */
+  .sec{padding:5rem 0}
+  .sec+.sec{border-top:1px solid var(--c-border)}
+  .sec-hdr{margin-bottom:2.5rem}
+  .sec-label{
+    font-family:var(--font-mono);font-size:.65rem;font-weight:500;
+    color:var(--c-accent);text-transform:uppercase;
+    letter-spacing:.15em;margin-bottom:.5rem;
+  }
+  .sec-title{
+    font-family:var(--font-display);font-weight:700;
+    font-size:1.8rem;letter-spacing:-.02em;
+  }
+
+  /* ---- CARD ---- */
+  .card{
+    background:var(--c-surface);border:1px solid var(--c-border);
+    border-radius:12px;padding:1.8rem;
+    transition:border-color .25s,box-shadow .25s;
+  }
+  .card:hover{
+    border-color:var(--c-border-h);
+    box-shadow:0 8px 32px rgba(0,0,0,.25);
+  }
+
+  /* ---- ABOUT ---- */
+  .about-cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .about-card{position:relative;padding-left:1.2rem}
+  .about-card::before{
+    content:'';position:absolute;left:0;top:.2rem;
+    width:2px;height:calc(100% - .4rem);border-radius:1px;
+  }
+  .about-card:nth-child(1)::before{background:var(--c-accent)}
+  .about-card:nth-child(2)::before{background:#818cf8}
+  .about-card:nth-child(3)::before{background:#60a5fa}
+  .about-card:nth-child(4)::before{background:#f472b6}
+  .ac-label{
+    font-family:var(--font-mono);font-size:.58rem;font-weight:500;
+    color:var(--c-accent);text-transform:uppercase;letter-spacing:.12em;
+    margin-bottom:.4rem;
+  }
+  .ac-title{
+    font-family:var(--font-display);font-weight:600;
+    font-size:.95rem;margin-bottom:.4rem;
+  }
+  .ac-text{font-size:.82rem;color:var(--c-text-2);line-height:1.75}
+
+  /* ---- STORY ---- */
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{
+    content:'';position:absolute;left:0;top:.3rem;bottom:.3rem;
+    width:1px;background:var(--c-border);
+  }
+  .tl-item{position:relative;padding-bottom:2.2rem}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{
+    content:'';position:absolute;left:-2rem;top:.35rem;
+    width:7px;height:7px;border-radius:50%;
+    border:1.5px solid var(--c-accent);background:var(--c-bg);
+  }
+  .tl-date{
+    font-family:var(--font-mono);font-size:.65rem;font-weight:500;
+    color:var(--c-accent);margin-bottom:.25rem;letter-spacing:.04em;
+  }
+  .tl-title{
+    font-family:var(--font-display);font-weight:600;
+    font-size:.95rem;margin-bottom:.3rem;
+  }
+  .tl-desc{font-size:.82rem;color:var(--c-text-2);line-height:1.75}
+
+  /* ---- PROJECTS ---- */
+  .proj-list{display:flex;flex-direction:column;gap:1rem}
+  .proj{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start}
+  .proj-name{
+    font-family:var(--font-display);font-weight:600;font-size:1.05rem;
+    margin-bottom:.5rem;
+  }
+  .proj-badge{
+    font-family:var(--font-mono);font-size:.6rem;font-weight:500;
+    text-transform:uppercase;letter-spacing:.06em;
+    padding:.2rem .6rem;border-radius:4px;white-space:nowrap;
+  }
+  .b-ai{background:rgba(167,139,250,.12);color:#a78bfa}
+  .b-hw{background:rgba(251,146,60,.12);color:#fb923c}
+  .b-sw{background:rgba(96,165,250,.12);color:#60a5fa}
+  .b-iot{background:rgba(244,114,182,.12);color:#f472b6}
+  .b-rs{background:rgba(45,212,160,.1);color:var(--c-accent)}
+  .proj-desc{font-size:.84rem;color:var(--c-text-2);line-height:1.75;margin-bottom:.8rem}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+  .ptag{
+    padding:.25rem .6rem;background:rgba(255,255,255,.03);
+    border:1px solid var(--c-border);border-radius:5px;
+    font-family:var(--font-mono);font-size:.6rem;color:var(--c-text-3);
+  }
+
+  /* ---- SKILLS ---- */
+  .sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .sk-icon{font-size:1.3rem;margin-bottom:.6rem}
+  .sk-name{
+    font-family:var(--font-display);font-weight:600;
+    font-size:.88rem;margin-bottom:.6rem;
+  }
+  .sk-bar-bg{
+    width:100%;height:3px;background:var(--c-border);
+    border-radius:2px;margin-bottom:.6rem;overflow:hidden;
+  }
+  .sk-bar{
+    height:100%;border-radius:2px;background:var(--c-accent);
+    width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1);
+  }
+  .card.vis .sk-bar{width:var(--w)}
+  .sk-desc{font-size:.72rem;color:var(--c-text-3);line-height:1.65}
+
+  /* ---- CERTS ---- */
+  .cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  .cert{
+    display:flex;align-items:center;gap:.8rem;
+    padding:1rem 1.2rem;background:var(--c-surface);
+    border:1px solid var(--c-border);border-radius:10px;
+    transition:border-color .2s;
+  }
+  .cert:hover{border-color:var(--c-border-h)}
+  .cert-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .cd-d{background:var(--c-accent);box-shadow:0 0 6px rgba(45,212,160,.4)}
+  .cd-p{background:#fbbf24}
+  .cd-q{background:var(--c-text-3)}
+  .cert-info{flex:1;min-width:0}
+  .cert-name{font-weight:500;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cert-src{font-size:.65rem;color:var(--c-text-3)}
+  .cert-st{
+    font-family:var(--font-mono);font-size:.6rem;font-weight:500;
+    color:var(--c-accent);white-space:nowrap;
+  }
+
+  /* ---- CONTACT ---- */
+  .contact{text-align:center;padding:6rem 0}
+  .contact h2{
+    font-family:var(--font-display);font-weight:700;
+    font-size:2rem;letter-spacing:-.025em;margin-bottom:.8rem;
+  }
+  .contact p{font-size:.95rem;color:var(--c-text-2);max-width:420px;margin:0 auto 2rem}
+  .cta{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.8rem 2rem;background:var(--c-accent);color:var(--c-bg);
+    border:none;border-radius:8px;font-family:var(--font-display);
+    font-weight:600;font-size:.88rem;text-decoration:none;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,212,160,.2)}
+
+  /* ---- FOOTER ---- */
+  .foot{
+    padding:1.8rem var(--side);border-top:1px solid var(--c-border);
+    display:flex;justify-content:space-between;font-size:.7rem;
+    color:var(--c-text-3);max-width:var(--max-w);margin:0 auto;
+  }
+
+  /* ---- REVEAL ---- */
+  .r{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+  .r.vis{opacity:1;transform:translateY(0)}
+  .r-d1{transition-delay:.06s}.r-d2{transition-delay:.12s}
+  .r-d3{transition-delay:.18s}.r-d4{transition-delay:.24s}
+
+  /* ---- RESPONSIVE ---- */
+  @media(max-width:700px){
+    .nav-links{display:none}
+    .about-cols,.cert-grid{grid-template-columns:1fr}
+    .sk-grid{grid-template-columns:1fr 1fr}
+    .proj{grid-template-columns:1fr}
+    .hero h1{font-size:2rem}
+    .sec-title{font-size:1.5rem}
+  }
+  @media(max-width:480px){.sk-grid{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){
+    .r{opacity:1;transform:none;transition:none}
+    .hero-tag,.hero h1,.hero-sub,.hero-row{animation:none}
+    .sk-bar{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-name">Bishowdeep Bhusal</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#story">Story</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#certs">Certs</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="wrap">
+  <section class="hero">
+    <div class="hero-tag">open to collaborate</div>
+    <h1>
+      I build things<br>
+      <span class="hl">that break.</span><br>
+      <span class="m">Then I fix them.</span>
+    </h1>
+    <p class="hero-sub">
+      Self-taught builder. Started with a broken Arduino at 13.
+      Built my first robot at 14 with three thousand rupees and zero formal training.
+      I learn by doing, break things to understand them, and never stop asking why.
+    </p>
+    <div class="hero-row">
+      <div class="h-chip">
+        <div class="h-chip-n" data-count="5">0</div>
+        <div class="h-chip-l">Robots Built</div>
+      </div>
+      <div class="h-chip">
+        <div class="h-chip-n" data-count="4">0</div>
+        <div class="h-chip-l">ESP32s Destroyed</div>
+      </div>
+      <div class="h-chip">
+        <div class="h-chip-n" data-count="8">0</div>
+        <div class="h-chip-l">Months Coding</div>
+      </div>
+      <div class="h-chip">
+        <div class="h-chip-n" data-count="3000" data-prefix="₹">0</div>
+        <div class="h-chip-l">First Robot Budget</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT -->
+<div class="wrap">
+  <section class="sec" id="about">
+    <div class="sec-hdr r">
+      <div class="sec-label">01 — Profile</div>
+      <div class="sec-title">About</div>
+    </div>
+    <div class="about-cols">
+      <div class="card about-card r r-d1">
+        <div class="ac-label">Origin</div>
+        <div class="ac-title">No Mentors. Just Curiosity.</div>
+        <div class="ac-text">Started with a broken Arduino and YouTube. No classes, no teachers. Just an obsession with understanding how things work. I was the only kid in school who cared about this stuff.</div>
+      </div>
+      <div class="card about-card r r-d2">
+        <div class="ac-label">Method</div>
+        <div class="ac-title">Build, Break, Repeat.</div>
+        <div class="ac-text">Destroyed 4 ESP32s on my first robot. Each failure taught me more than any tutorial. The fastest way to learn is to build something real, watch it fail, and figure out why.</div>
+      </div>
+      <div class="card about-card r r-d3">
+        <div class="ac-label">Thinking</div>
+        <div class="ac-title">First-Principles Brain.</div>
+        <div class="ac-text">I don't memorize formulas — I need to know who invented them and why. When I learn electronics, I need to know what an electron actually is. This depth makes everything click faster.</div>
+      </div>
+      <div class="card about-card r r-d4">
+        <div class="ac-label">Drive</div>
+        <div class="ac-title">Can't Stop, Won't Stop.</div>
+        <div class="ac-text">While most people scroll reels, I'm up late debugging code or reading about how things work. Not because I have to — because I genuinely can't stop.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- STORY -->
+<div class="wrap">
+  <section class="sec" id="story">
+    <div class="sec-hdr r">
+      <div class="sec-label">02 — Journey</div>
+      <div class="sec-title">My Story</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item r">
+        <div class="tl-date">2023 — Age 13</div>
+        <div class="tl-title">The Broken Arduino</div>
+        <div class="tl-desc">Found an old Arduino board at a junk shop. Started watching tutorials at night. Didn't understand the code but loved the idea that you could make hardware do things with software.</div>
+      </div>
+      <div class="tl-item r">
+        <div class="tl-date">2024 — Age 14</div>
+        <div class="tl-title">The ₹3,000 Robot</div>
+        <div class="tl-desc">School science exhibition. No one else wanted to do robotics. I was the only one who knew anything. Led a team of 5 — none of them had experience. Bought ESP32, motors, motor driver, breadboard, wires. Budget: ₹3,000. Broke 4 ESP32s. Almost gave up. Then the 5th one worked — a web-controlled robot running on its own Wi-Fi.</div>
+      </div>
+      <div class="tl-item r">
+        <div class="tl-date">2024 — Self-Taught</div>
+        <div class="tl-title">Learning to Solder</div>
+        <div class="tl-desc">During the robot build, I taught myself to solder. Burned my fingers. Messed up joints. But eventually got clean connections. Also learned to use a multimeter, read resistor values, and debug circuits. All from YouTube and trial-and-error.</div>
+      </div>
+      <div class="tl-item r">
+        <div class="tl-date">2025 — Python Era</div>
+        <div class="tl-title">Matrices Saved Me</div>
+        <div class="tl-desc">Started learning Python on Khan Academy. In 10 days, went from zero to building a course recommendation engine using 2D arrays. Discovered matrices on my own while learning arrays. Built 5 iterations in 2 hours.</div>
+      </div>
+      <div class="tl-item r">
+        <div class="tl-date">2025 — Now</div>
+        <div class="tl-title">The Hunger Grows</div>
+        <div class="tl-desc">Built more robots. Ran self-experiments on learning. Juggling: 0 → 13 catches in 3 days, self-taught. Now looking for a team that matches my energy. Ready to build things that matter.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PROJECTS -->
+<div class="wrap">
+  <section class="sec" id="projects">
+    <div class="sec-hdr r">
+      <div class="sec-label">03 — Work</div>
+      <div class="sec-title">Projects</div>
+    </div>
+    <div class="proj-list">
+      <!-- P1 -->
+      <div class="card r">
+        <div class="proj">
+          <div>
+            <div class="proj-name">ESP32 AI Robot That Talks</div>
+            <div class="proj-desc">Built a robot that can see, hear, and speak. ESP32 + Gemini Flash API for AI processing. Camera sensor captures frames, mic module listens for voice commands. Motor driver controls movement. The robot answers questions, recognizes objects, and responds to voice in real-time.</div>
+            <div class="proj-tags">
+              <span class="ptag">ESP32</span>
+              <span class="ptag">Gemini Flash API</span>
+              <span class="ptag">Camera Module</span>
+              <span class="ptag">Mic Module</span>
+              <span class="ptag">Motor Driver</span>
+              <span class="ptag">WiFi</span>
+            </div>
+          </div>
+          <div class="proj-badge b-ai">AI + HW</div>
+        </div>
+      </div>
+      <!-- P2 -->
+      <div class="card r">
+        <div class="proj">
+          <div>
+            <div class="proj-name">ESP32 Web-Controlled Robot</div>
+            <div class="proj-desc">Built a robot that hosts its own Wi-Fi network and serves a control interface from any browser. Motor driver integration, web server on ESP32, responsive controls. The project that started everything.</div>
+            <div class="proj-tags">
+              <span class="ptag">ESP32</span>
+              <span class="ptag">Arduino</span>
+              <span class="ptag">Web Server</span>
+              <span class="ptag">Wi-Fi AP</span>
+              <span class="ptag">Motor Driver</span>
+            </div>
+          </div>
+          <div class="proj-badge b-hw">Hardware</div>
+        </div>
+      </div>
+      <!-- P3 -->
+      <div class="card r">
+        <div class="proj">
+          <div>
+            <div class="proj-name">Course Recommendation Engine</div>
+            <div class="proj-desc">Matrix-based recommendation system in Python. 24 courses across 4 categories. Takes grade, interest, time, seriousness — outputs personalized picks. Discovered 2D arrays independently while learning.</div>
+            <div class="proj-tags">
+              <span class="ptag">Python</span>
+              <span class="ptag">2D Arrays</span>
+              <span class="ptag">Matrices</span>
+              <span class="ptag">Input Logic</span>
+            </div>
+          </div>
+          <div class="proj-badge b-sw">Software</div>
+        </div>
+      </div>
+      <!-- P4 -->
+      <div class="card r">
+        <div class="proj">
+          <div>
+            <div class="proj-name">Smart Home Automation</div>
+            <div class="proj-desc">Arduino-based home automation with relay modules. Control lights and fans from a phone via custom web interface. Learned about relay switching, AC wiring basics, and web-to-hardware communication.</div>
+            <div class="proj-tags">
+              <span class="ptag">Arduino Mega</span>
+              <span class="ptag">Relay Module</span>
+              <span class="ptag">Web Interface</span>
+              <span class="ptag">WiFi</span>
+            </div>
+          </div>
+          <div class="proj-badge b-iot">IoT</div>
+        </div>
+      </div>
+      <!-- P5 -->
+      <div class="card r">
+        <div class="proj">
+          <div>
+            <div class="proj-name">Self-Learning Experiments</div>
+            <div class="proj-desc">Tracked my own learning patterns. Juggling: 0 → 5 → 10 → 13 catches over 3 days. Proved step-function learning — struggle, plateau, regression, breakthrough. Nap was critical for consolidation.</div>
+            <div class="proj-tags">
+              <span class="ptag">Self-Experiment</span>
+              <span class="ptag">Motor Learning</span>
+              <span class="ptag">Data Tracking</span>
+              <span class="ptag">Step-Function</span>
+            </div>
+          </div>
+          <div class="proj-badge b-rs">Research</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SKILLS -->
+<div class="wrap">
+  <section class="sec" id="skills">
+    <div class="sec-hdr r">
+      <div class="sec-label">04 — Stack</div>
+      <div class="sec-title">Skills</div>
+    </div>
+    <div class="sk-grid">
+      <div class="card r" style="--w:75%">
+        <div class="sk-icon">🔧</div>
+        <div class="sk-name">Hardware & Electronics</div>
+        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
+        <div class="sk-desc">ESP32, Arduino, motor drivers, soldering, multimeter, circuit debugging, sensor integration</div>
+      </div>
+      <div class="card r" style="--w:68%">
+        <div class="sk-icon">🐍</div>
+        <div class="sk-name">Python</div>
+        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
+        <div class="sk-desc">Variables, loops, conditionals, 2D arrays, matrices, input handling, API basics</div>
+      </div>
+      <div class="card r" style="--w:60%">
+        <div class="sk-icon">⚡</div>
+        <div class="sk-name">C++ / Arduino</div>
+        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
+        <div class="sk-desc">GPIO control, motor protocols, serial communication, sensor libraries, basic embedded</div>
+      </div>
+      <div class="card r" style="--w:55%">
+        <div class="sk-icon">🌐</div>
+        <div class="sk-name">Web Basics</div>
+        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
+        <div class="sk-desc">HTML/CSS, ESP32 web servers, browser-based control, responsive interfaces</div>
+      </div>
+      <div class="card r" style="--w:45%">
+        <div class="sk-icon">🧠</div>
+        <div class="sk-name">AI & APIs</div>
+        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
+        <div class="sk-desc">Gemini Flash API, OpenAI API, AI embedding research, using AI for coding help</div>
+      </div>
+      <div class="card r" style="--w:85%">
+        <div class="sk-icon">🛠️</div>
+        <div class="sk-name">Problem Solving</div>
+        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
+        <div class="sk-desc">Debugging, first-principles thinking, rapid prototyping, learning from failure, iteration</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CERTS -->
+<div class="wrap">
+  <section class="sec" id="certs">
+    <div class="sec-hdr r">
+      <div class="sec-label">05 — Credentials</div>
+      <div class="sec-title">Certs & Learning</div>
+    </div>
+    <div class="cert-grid">
+      <div class="cert r">
+        <div class="cert-dot cd-d"></div>
+        <div class="cert-info">
+          <div class="cert-name">CS50: Intro to Computer Science</div>
+          <div class="cert-src">Harvard — edX</div>
+        </div>
+        <div class="cert-st">Done</div>
+      </div>
+      <div class="cert r">
+        <div class="cert-dot cd-p"></div>
+        <div class="cert-info">
+          <div class="cert-name">Python for Everybody</div>
+          <div class="cert-src">U of Michigan — Coursera</div>
+        </div>
+        <div class="cert-st">Active</div>
+      </div>
+      <div class="cert r">
+        <div class="cert-dot cd-p"></div>
+        <div class="cert-info">
+          <div class="cert-name">Arduino Programming</div>
+          <div class="cert-src">Microsoft Learn</div>
+        </div>
+        <div class="cert-st">Active</div>
+      </div>
+      <div class="cert r">
+        <div class="cert-dot cd-q"></div>
+        <div class="cert-info">
+          <div class="cert-name">Intro to Electronics</div>
+          <div class="cert-src">Khan Academy</div>
+        </div>
+        <div class="cert-st">Queued</div>
+      </div>
+      <div class="cert r">
+        <div class="cert-dot cd-q"></div>
+        <div class="cert-info">
+          <div class="cert-name">Scientific Computing w/ Python</div>
+          <div class="cert-src">freeCodeCamp</div>
+        </div>
+        <div class="cert-st">Queued</div>
+      </div>
+      <div class="cert r">
+        <div class="cert-dot cd-q"></div>
+        <div class="cert-info">
+          <div class="cert-name">Raspberry Pi Physical Computing</div>
+          <div class="cert-src">Raspberry Pi Foundation</div>
+        </div>
+        <div class="cert-st">Queued</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT -->
+<div class="wrap">
+  <section class="contact">
+    <h2 class="r">Ready to build<br>something real.</h2>
+    <p class="r">Always looking for the next challenge. If it involves building, learning, or breaking things to understand them — I'm in.</p>
+    <a href="mailto:limitlessneverdies369@gmail.com" class="cta r">Get In Touch →</a>
+  </section>
+</div>
+
+<footer class="foot">
+  <div>Bishowdeep Bhusal</div>
+  <div>Built with curiosity</div>
+</footer>
+
+<script>
+// Reveal
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:.1});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+// Counters
+function count(el){
+  const t=+el.dataset.count,p=el.dataset.prefix||'';
+  const s=performance.now();
+  (function u(n){
+    const pr=Math.min((n-s)/1400,1);
+    const e=1-Math.pow(1-pr,3);
+    el.textContent=p+Math.round(t*e).toLocaleString();
+    if(pr<1)requestAnimationFrame(u);
+  })(s);
+}
+const co=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){count(x.target);co.unobserve(x.target)}})},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
