@@ -1,656 +1,345 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bishowdeep Bhusal</title>
-<meta name="description" content="Self-taught builder. Hardware, Python, IoT. I break things to understand them.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bishowdeep Bhusal (LIMITLESS): builder, Kathmandu</title>
+<meta name="description" content="Bishowdeep Bhusal, aka LIMITLESS. 16, Class 11 science, Kathmandu. Offline payments, a reverse-engineered game engine, scam-proofing for migrant workers, and a homemade Tesla coil.">
+<meta name="theme-color" content="#efede6">
+<meta property="og:title" content="LIMITLESS: Bishowdeep Bhusal">
+<meta property="og:description" content="16. Kathmandu. I take things apart to see why they work, then build the version I wish existed.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-  :root{
-    --c-bg:#0c0c0e;
-    --c-surface:#141416;
-    --c-border:#222225;
-    --c-border-h:#333338;
-    --c-text:#ececef;
-    --c-text-2:#8e8e96;
-    --c-text-3:#55555e;
-    --c-accent:#2dd4a0;
-    --c-accent-dim:rgba(45,212,160,.08);
-    --c-accent-mid:rgba(45,212,160,.15);
-    --font-body:'Inter',system-ui,-apple-system,sans-serif;
-    --font-display:'Space Grotesk',system-ui,sans-serif;
-    --font-mono:'JetBrains Mono',monospace;
-    --max-w:720px;
-    --side:clamp(1.5rem,5vw,3rem);
-  }
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{
-    font-family:var(--font-body);
-    background:var(--c-bg);
-    color:var(--c-text);
-    line-height:1.7;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    overflow-x:hidden;
-  }
-  ::selection{background:var(--c-accent);color:var(--c-bg)}
-
-  /* ---- NAV ---- */
-  .nav{
-    position:fixed;top:0;left:0;right:0;z-index:50;
-    padding:.9rem var(--side);
-    display:flex;justify-content:space-between;align-items:center;
-    background:rgba(12,12,14,.8);
-    backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--c-border);
-  }
-  .nav-name{
-    font-family:var(--font-display);font-weight:600;font-size:.95rem;
-    color:var(--c-text);letter-spacing:-.02em;
-  }
-  .nav-links{display:flex;gap:1.8rem}
-  .nav-links a{
-    font-size:.78rem;font-weight:500;color:var(--c-text-3);
-    text-decoration:none;transition:color .2s;letter-spacing:.02em;
-  }
-  .nav-links a:hover{color:var(--c-text)}
-
-  /* ---- LAYOUT ---- */
-  .wrap{max-width:var(--max-w);margin:0 auto;padding:0 var(--side)}
-
-  /* ---- HERO ---- */
-  .hero{
-    min-height:100vh;display:flex;flex-direction:column;
-    justify-content:center;padding-top:5rem;
-  }
-  .hero-tag{
-    font-family:var(--font-mono);font-size:.7rem;font-weight:500;
-    color:var(--c-accent);letter-spacing:.08em;
-    text-transform:uppercase;margin-bottom:1.8rem;
-    display:flex;align-items:center;gap:.6rem;
-  }
-  .hero-tag::before{
-    content:'';width:5px;height:5px;border-radius:50%;
-    background:var(--c-accent);
-    animation:blink 2.4s ease infinite;
-  }
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-  .hero h1{
-    font-family:var(--font-display);font-weight:700;
-    font-size:clamp(2.4rem,5.5vw,3.6rem);
-    line-height:1.12;letter-spacing:-.035em;
-    margin-bottom:1.6rem;
-  }
-  .hero h1 .hl{
-    background:linear-gradient(135deg,var(--c-accent),#5eead4);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  }
-  .hero h1 .m{color:var(--c-text-3)}
-  .hero-sub{
-    font-size:1.05rem;color:var(--c-text-2);max-width:520px;
-    line-height:1.85;margin-bottom:2.5rem;
-  }
-  .hero-row{display:flex;gap:.6rem;flex-wrap:wrap}
-  .h-chip{
-    padding:.6rem 1.2rem;background:var(--c-surface);
-    border:1px solid var(--c-border);border-radius:8px;
-    transition:border-color .2s;
-  }
-  .h-chip:hover{border-color:var(--c-border-h)}
-  .h-chip-n{
-    font-family:var(--font-display);font-weight:700;
-    font-size:1.1rem;color:var(--c-accent);line-height:1;
-  }
-  .h-chip-l{
-    font-size:.62rem;color:var(--c-text-3);text-transform:uppercase;
-    letter-spacing:.1em;margin-top:.2rem;
-  }
-
-  /* ---- SECTION ---- */
-  .sec{padding:5rem 0}
-  .sec+.sec{border-top:1px solid var(--c-border)}
-  .sec-hdr{margin-bottom:2.5rem}
-  .sec-label{
-    font-family:var(--font-mono);font-size:.65rem;font-weight:500;
-    color:var(--c-accent);text-transform:uppercase;
-    letter-spacing:.15em;margin-bottom:.5rem;
-  }
-  .sec-title{
-    font-family:var(--font-display);font-weight:700;
-    font-size:1.8rem;letter-spacing:-.02em;
-  }
-
-  /* ---- CARD ---- */
-  .card{
-    background:var(--c-surface);border:1px solid var(--c-border);
-    border-radius:12px;padding:1.8rem;
-    transition:border-color .25s,box-shadow .25s;
-  }
-  .card:hover{
-    border-color:var(--c-border-h);
-    box-shadow:0 8px 32px rgba(0,0,0,.25);
-  }
-
-  /* ---- ABOUT ---- */
-  .about-cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-  .about-card{position:relative;padding-left:1.2rem}
-  .about-card::before{
-    content:'';position:absolute;left:0;top:.2rem;
-    width:2px;height:calc(100% - .4rem);border-radius:1px;
-  }
-  .about-card:nth-child(1)::before{background:var(--c-accent)}
-  .about-card:nth-child(2)::before{background:#818cf8}
-  .about-card:nth-child(3)::before{background:#60a5fa}
-  .about-card:nth-child(4)::before{background:#f472b6}
-  .ac-label{
-    font-family:var(--font-mono);font-size:.58rem;font-weight:500;
-    color:var(--c-accent);text-transform:uppercase;letter-spacing:.12em;
-    margin-bottom:.4rem;
-  }
-  .ac-title{
-    font-family:var(--font-display);font-weight:600;
-    font-size:.95rem;margin-bottom:.4rem;
-  }
-  .ac-text{font-size:.82rem;color:var(--c-text-2);line-height:1.75}
-
-  /* ---- STORY ---- */
-  .timeline{position:relative;padding-left:2rem}
-  .timeline::before{
-    content:'';position:absolute;left:0;top:.3rem;bottom:.3rem;
-    width:1px;background:var(--c-border);
-  }
-  .tl-item{position:relative;padding-bottom:2.2rem}
-  .tl-item:last-child{padding-bottom:0}
-  .tl-item::before{
-    content:'';position:absolute;left:-2rem;top:.35rem;
-    width:7px;height:7px;border-radius:50%;
-    border:1.5px solid var(--c-accent);background:var(--c-bg);
-  }
-  .tl-date{
-    font-family:var(--font-mono);font-size:.65rem;font-weight:500;
-    color:var(--c-accent);margin-bottom:.25rem;letter-spacing:.04em;
-  }
-  .tl-title{
-    font-family:var(--font-display);font-weight:600;
-    font-size:.95rem;margin-bottom:.3rem;
-  }
-  .tl-desc{font-size:.82rem;color:var(--c-text-2);line-height:1.75}
-
-  /* ---- PROJECTS ---- */
-  .proj-list{display:flex;flex-direction:column;gap:1rem}
-  .proj{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start}
-  .proj-name{
-    font-family:var(--font-display);font-weight:600;font-size:1.05rem;
-    margin-bottom:.5rem;
-  }
-  .proj-badge{
-    font-family:var(--font-mono);font-size:.6rem;font-weight:500;
-    text-transform:uppercase;letter-spacing:.06em;
-    padding:.2rem .6rem;border-radius:4px;white-space:nowrap;
-  }
-  .b-ai{background:rgba(167,139,250,.12);color:#a78bfa}
-  .b-hw{background:rgba(251,146,60,.12);color:#fb923c}
-  .b-sw{background:rgba(96,165,250,.12);color:#60a5fa}
-  .b-iot{background:rgba(244,114,182,.12);color:#f472b6}
-  .b-rs{background:rgba(45,212,160,.1);color:var(--c-accent)}
-  .proj-desc{font-size:.84rem;color:var(--c-text-2);line-height:1.75;margin-bottom:.8rem}
-  .proj-tags{display:flex;flex-wrap:wrap;gap:.35rem}
-  .ptag{
-    padding:.25rem .6rem;background:rgba(255,255,255,.03);
-    border:1px solid var(--c-border);border-radius:5px;
-    font-family:var(--font-mono);font-size:.6rem;color:var(--c-text-3);
-  }
-
-  /* ---- SKILLS ---- */
-  .sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-  .sk-icon{font-size:1.3rem;margin-bottom:.6rem}
-  .sk-name{
-    font-family:var(--font-display);font-weight:600;
-    font-size:.88rem;margin-bottom:.6rem;
-  }
-  .sk-bar-bg{
-    width:100%;height:3px;background:var(--c-border);
-    border-radius:2px;margin-bottom:.6rem;overflow:hidden;
-  }
-  .sk-bar{
-    height:100%;border-radius:2px;background:var(--c-accent);
-    width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1);
-  }
-  .card.vis .sk-bar{width:var(--w)}
-  .sk-desc{font-size:.72rem;color:var(--c-text-3);line-height:1.65}
-
-  /* ---- CERTS ---- */
-  .cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-  .cert{
-    display:flex;align-items:center;gap:.8rem;
-    padding:1rem 1.2rem;background:var(--c-surface);
-    border:1px solid var(--c-border);border-radius:10px;
-    transition:border-color .2s;
-  }
-  .cert:hover{border-color:var(--c-border-h)}
-  .cert-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-  .cd-d{background:var(--c-accent);box-shadow:0 0 6px rgba(45,212,160,.4)}
-  .cd-p{background:#fbbf24}
-  .cd-q{background:var(--c-text-3)}
-  .cert-info{flex:1;min-width:0}
-  .cert-name{font-weight:500;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .cert-src{font-size:.65rem;color:var(--c-text-3)}
-  .cert-st{
-    font-family:var(--font-mono);font-size:.6rem;font-weight:500;
-    color:var(--c-accent);white-space:nowrap;
-  }
-
-  /* ---- CONTACT ---- */
-  .contact{text-align:center;padding:6rem 0}
-  .contact h2{
-    font-family:var(--font-display);font-weight:700;
-    font-size:2rem;letter-spacing:-.025em;margin-bottom:.8rem;
-  }
-  .contact p{font-size:.95rem;color:var(--c-text-2);max-width:420px;margin:0 auto 2rem}
-  .cta{
-    display:inline-flex;align-items:center;gap:.5rem;
-    padding:.8rem 2rem;background:var(--c-accent);color:var(--c-bg);
-    border:none;border-radius:8px;font-family:var(--font-display);
-    font-weight:600;font-size:.88rem;text-decoration:none;
-    transition:transform .2s,box-shadow .2s;
-  }
-  .cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,212,160,.2)}
-
-  /* ---- FOOTER ---- */
-  .foot{
-    padding:1.8rem var(--side);border-top:1px solid var(--c-border);
-    display:flex;justify-content:space-between;font-size:.7rem;
-    color:var(--c-text-3);max-width:var(--max-w);margin:0 auto;
-  }
-
-  /* ---- REVEAL ---- */
-  .r{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
-  .r.vis{opacity:1;transform:translateY(0)}
-  .r-d1{transition-delay:.06s}.r-d2{transition-delay:.12s}
-  .r-d3{transition-delay:.18s}.r-d4{transition-delay:.24s}
-
-  /* ---- RESPONSIVE ---- */
-  @media(max-width:700px){
-    .nav-links{display:none}
-    .about-cols,.cert-grid{grid-template-columns:1fr}
-    .sk-grid{grid-template-columns:1fr 1fr}
-    .proj{grid-template-columns:1fr}
-    .hero h1{font-size:2rem}
-    .sec-title{font-size:1.5rem}
-  }
-  @media(max-width:480px){.sk-grid{grid-template-columns:1fr}}
-  @media(prefers-reduced-motion:reduce){
-    .r{opacity:1;transform:none;transition:none}
-    .hero-tag,.hero h1,.hero-sub,.hero-row{animation:none}
-    .sk-bar{transition:none}
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=JetBrains+Mono:wght@400;500&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-name">Bishowdeep Bhusal</div>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#story">Story</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#certs">Certs</a>
+<div class="loader" id="loader" aria-hidden="true">
+  <canvas class="loader__arc" id="loaderArc"></canvas>
+  <div class="loader__word"><span>LIMIT</span><span>LESS</span></div>
+  <div class="loader__foot">
+    <span class="mono">charging coil</span>
+    <span class="loader__count mono" id="loaderCount">000</span>
   </div>
-</nav>
-
-<!-- HERO -->
-<div class="wrap">
-  <section class="hero">
-    <div class="hero-tag">open to collaborate</div>
-    <h1>
-      I build things<br>
-      <span class="hl">that break.</span><br>
-      <span class="m">Then I fix them.</span>
-    </h1>
-    <p class="hero-sub">
-      Self-taught builder. Started with a broken Arduino at 13.
-      Built my first robot at 14 with three thousand rupees and zero formal training.
-      I learn by doing, break things to understand them, and never stop asking why.
-    </p>
-    <div class="hero-row">
-      <div class="h-chip">
-        <div class="h-chip-n" data-count="5">0</div>
-        <div class="h-chip-l">Robots Built</div>
-      </div>
-      <div class="h-chip">
-        <div class="h-chip-n" data-count="4">0</div>
-        <div class="h-chip-l">ESP32s Destroyed</div>
-      </div>
-      <div class="h-chip">
-        <div class="h-chip-n" data-count="8">0</div>
-        <div class="h-chip-l">Months Coding</div>
-      </div>
-      <div class="h-chip">
-        <div class="h-chip-n" data-count="3000" data-prefix="₹">0</div>
-        <div class="h-chip-l">First Robot Budget</div>
-      </div>
-    </div>
-  </section>
 </div>
 
-<!-- ABOUT -->
-<div class="wrap">
-  <section class="sec" id="about">
-    <div class="sec-hdr r">
-      <div class="sec-label">01 — Profile</div>
-      <div class="sec-title">About</div>
-    </div>
-    <div class="about-cols">
-      <div class="card about-card r r-d1">
-        <div class="ac-label">Origin</div>
-        <div class="ac-title">No Mentors. Just Curiosity.</div>
-        <div class="ac-text">Started with a broken Arduino and YouTube. No classes, no teachers. Just an obsession with understanding how things work. I was the only kid in school who cared about this stuff.</div>
-      </div>
-      <div class="card about-card r r-d2">
-        <div class="ac-label">Method</div>
-        <div class="ac-title">Build, Break, Repeat.</div>
-        <div class="ac-text">Destroyed 4 ESP32s on my first robot. Each failure taught me more than any tutorial. The fastest way to learn is to build something real, watch it fail, and figure out why.</div>
-      </div>
-      <div class="card about-card r r-d3">
-        <div class="ac-label">Thinking</div>
-        <div class="ac-title">First-Principles Brain.</div>
-        <div class="ac-text">I don't memorize formulas — I need to know who invented them and why. When I learn electronics, I need to know what an electron actually is. This depth makes everything click faster.</div>
-      </div>
-      <div class="card about-card r r-d4">
-        <div class="ac-label">Drive</div>
-        <div class="ac-title">Can't Stop, Won't Stop.</div>
-        <div class="ac-text">While most people scroll reels, I'm up late debugging code or reading about how things work. Not because I have to — because I genuinely can't stop.</div>
-      </div>
-    </div>
-  </section>
-</div>
+<div class="progress" id="progress"></div>
+<div class="cursor" id="cursor"><span class="cursor__label" id="cursorLabel"></span></div>
 
-<!-- STORY -->
-<div class="wrap">
-  <section class="sec" id="story">
-    <div class="sec-hdr r">
-      <div class="sec-label">02 — Journey</div>
-      <div class="sec-title">My Story</div>
-    </div>
-    <div class="timeline">
-      <div class="tl-item r">
-        <div class="tl-date">2023 — Age 13</div>
-        <div class="tl-title">The Broken Arduino</div>
-        <div class="tl-desc">Found an old Arduino board at a junk shop. Started watching tutorials at night. Didn't understand the code but loved the idea that you could make hardware do things with software.</div>
-      </div>
-      <div class="tl-item r">
-        <div class="tl-date">2024 — Age 14</div>
-        <div class="tl-title">The ₹3,000 Robot</div>
-        <div class="tl-desc">School science exhibition. No one else wanted to do robotics. I was the only one who knew anything. Led a team of 5 — none of them had experience. Bought ESP32, motors, motor driver, breadboard, wires. Budget: ₹3,000. Broke 4 ESP32s. Almost gave up. Then the 5th one worked — a web-controlled robot running on its own Wi-Fi.</div>
-      </div>
-      <div class="tl-item r">
-        <div class="tl-date">2024 — Self-Taught</div>
-        <div class="tl-title">Learning to Solder</div>
-        <div class="tl-desc">During the robot build, I taught myself to solder. Burned my fingers. Messed up joints. But eventually got clean connections. Also learned to use a multimeter, read resistor values, and debug circuits. All from YouTube and trial-and-error.</div>
-      </div>
-      <div class="tl-item r">
-        <div class="tl-date">2025 — Python Era</div>
-        <div class="tl-title">Matrices Saved Me</div>
-        <div class="tl-desc">Started learning Python on Khan Academy. In 10 days, went from zero to building a course recommendation engine using 2D arrays. Discovered matrices on my own while learning arrays. Built 5 iterations in 2 hours.</div>
-      </div>
-      <div class="tl-item r">
-        <div class="tl-date">2025 — Now</div>
-        <div class="tl-title">The Hunger Grows</div>
-        <div class="tl-desc">Built more robots. Ran self-experiments on learning. Juggling: 0 → 13 catches in 3 days, self-taught. Now looking for a team that matches my energy. Ready to build things that matter.</div>
-      </div>
-    </div>
-  </section>
-</div>
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top" data-scroll>LIMITLESS<sup>®</sup></a>
+  <nav class="nav__links">
+    <a href="#builds" data-scroll class="u-link">Builds</a>
+    <a href="#lab" data-scroll class="u-link">Lab</a>
+    <a href="#casefile" data-scroll class="u-link">Security</a>
+    <a href="#journey" data-scroll class="u-link">Journey</a>
+  </nav>
+  <a class="pill" href="#contact" data-scroll><span class="roll"><span>Let's build</span><span aria-hidden="true">Let's build</span></span></a>
+</header>
 
-<!-- PROJECTS -->
-<div class="wrap">
-  <section class="sec" id="projects">
-    <div class="sec-hdr r">
-      <div class="sec-label">03 — Work</div>
-      <div class="sec-title">Projects</div>
+<main id="main">
+
+<section class="hero" id="top">
+  <div class="hero__top">
+    <p>Bishowdeep Bhusal<br><span class="muted">Builder · Robotics · Software</span></p>
+    <p class="hero__dev deva">लिमिटलेस</p>
+    <p class="hero__time">Kathmandu, Nepal<br><span class="muted mono" id="clock">--:--:--</span> <span class="muted mono tiny">UTC+5:45</span></p>
+  </div>
+  <h1 class="hero__name" aria-label="Limitless never dies">
+    <span class="line"><span class="line__in">Limit<span class="hl"><span class="hl__bg"></span>less</span></span></span>
+    <span class="line line--right"><span class="line__in"><em>never</em> dies.</span></span>
+  </h1>
+  <div class="hero__bottom">
+    <p class="hero__intro reveal">16, Class 11 science. I build things people say shouldn't work. Like <span class="rot" id="rot"><span class="rot__in">payments with zero bars of signal</span></span>Then I make them work.</p>
+    <div class="hero__meta reveal mono">
+      <span>N 27.7172°</span><span>E 85.3240°</span><span class="blink">● building NexPay</span>
     </div>
-    <div class="proj-list">
-      <!-- P1 -->
-      <div class="card r">
-        <div class="proj">
-          <div>
-            <div class="proj-name">ESP32 AI Robot That Talks</div>
-            <div class="proj-desc">Built a robot that can see, hear, and speak. ESP32 + Gemini Flash API for AI processing. Camera sensor captures frames, mic module listens for voice commands. Motor driver controls movement. The robot answers questions, recognizes objects, and responds to voice in real-time.</div>
-            <div class="proj-tags">
-              <span class="ptag">ESP32</span>
-              <span class="ptag">Gemini Flash API</span>
-              <span class="ptag">Camera Module</span>
-              <span class="ptag">Mic Module</span>
-              <span class="ptag">Motor Driver</span>
-              <span class="ptag">WiFi</span>
+    <a href="#about" data-scroll class="hero__scroll"><span class="mono">scroll</span><span class="hero__scroll-line"></span></a>
+  </div>
+</section>
+
+<section class="statement" id="about">
+  <div class="wrap">
+    <p class="label mono">00 / about</p>
+    <p class="statement__text" data-words>I take things apart to find out why they work: a game engine, a payment system, my own attention span. Then I build the version I wish existed. GPA is nice. The why behind everything is the part I actually care about.</p>
+    <dl class="numbers">
+      <div class="numbers__item"><dd><span data-count="5">0</span>+</dd><dt>hackathons, 1 win</dt></div>
+      <div class="numbers__item"><dd><span data-count="14">0</span></dd><dt>public repos, all mine</dt></div>
+      <div class="numbers__item"><dd><span data-count="3.90" data-dec="2">0</span></dd><dt>SEE GPA, scholarship holder</dt></div>
+      <div class="numbers__item"><dd>Rs&nbsp;<span data-count="9000">0</span></dd><dt>course I could buy for Rs 0. I reported it.</dt></div>
+    </dl>
+  </div>
+</section>
+
+<section class="marquee" aria-label="Where I've been">
+  <div class="marquee__track">
+    <div class="marquee__group">
+      <span>Prime College Hackathon</span><i>✦</i><span>KMC Robotics Club</span><i>✦</i><span>Quick Enterprises, SWE intern</span><i>✦</i><span>Padhai Mantra, bug report</span><i>✦</i><span>github/limitlessneverdies</span><i>✦</i>
+    </div>
+    <div class="marquee__group" aria-hidden="true">
+      <span>Prime College Hackathon</span><i>✦</i><span>KMC Robotics Club</span><i>✦</i><span>Quick Enterprises, SWE intern</span><i>✦</i><span>Padhai Mantra, bug report</span><i>✦</i><span>github/limitlessneverdies</span><i>✦</i>
+    </div>
+  </div>
+</section>
+
+<section class="builds" id="builds">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">Builds</h2>
+      <p class="section-side reveal">Four I'd defend in front of anyone. Every one started with a problem I or someone near me actually had.</p>
+    </div>
+
+    <div class="stack">
+
+      <article class="card card--dark" data-cursor="NexPay">
+        <div class="card__inner">
+          <div class="card__text">
+            <div class="card__top mono"><span>01</span><span class="tag tag--live">Android · v0.3</span></div>
+            <h3>NexPay</h3>
+            <p class="card__lede">Money that moves without internet.</p>
+            <p class="card__body">Half of Nepal knows the feeling: you're at a tea shop in the hills, you want to pay, and there's no signal. NexPay signs one-time payment notes on your phone and passes them along by QR, Bluetooth, Wi-Fi Direct or NFC. The person you pay can even pass it on before going online. It settles once you're back on the network, and it can only be spent once.</p>
+            <dl class="card__facts">
+              <div><dt>Crypto</dt><dd>ECDSA P-256 signed notes</dd></div>
+              <div><dt>Transport</dt><dd>QR · BT · Wi-Fi Direct · NFC</dd></div>
+              <div><dt>Built</dt><dd>Protocol, app, ledger server, design</dd></div>
+              <div><dt>With</dt><dd>Jitesh Prakash Chaudhary</dd></div>
+            </dl>
+            <a class="u-link card__link" href="https://limitlessneverdies.github.io/paila-app/" target="_blank" rel="noopener">Get the app ↗</a>
+          </div>
+          <div class="card__media card__media--phone">
+            <img src="assets/nexpay.webp" alt="Eight NexPay screens: onboarding, PIN, wallet balance, nearby people radar, amount entry and hold-to-pay confirm" width="637" height="682" loading="lazy">
+            <div class="pay" id="pay">
+              <div class="pay__bar mono"><span class="pay__sig"><i></i><i></i><i></i><i></i></span><span id="payNet">no signal · airplane mode</span></div>
+              <button class="pay__btn" id="payBtn" data-cursor="Hold"><span class="pay__fill" id="payFill"></span><span class="pay__txt" id="payTxt">Hold to pay Rs 250, offline</span></button>
+              <p class="pay__out mono" id="payOut">try it. there's no internet in this card.</p>
             </div>
           </div>
-          <div class="proj-badge b-ai">AI + HW</div>
         </div>
-      </div>
-      <!-- P2 -->
-      <div class="card r">
-        <div class="proj">
-          <div>
-            <div class="proj-name">ESP32 Web-Controlled Robot</div>
-            <div class="proj-desc">Built a robot that hosts its own Wi-Fi network and serves a control interface from any browser. Motor driver integration, web server on ESP32, responsive controls. The project that started everything.</div>
-            <div class="proj-tags">
-              <span class="ptag">ESP32</span>
-              <span class="ptag">Arduino</span>
-              <span class="ptag">Web Server</span>
-              <span class="ptag">Wi-Fi AP</span>
-              <span class="ptag">Motor Driver</span>
+      </article>
+
+      <article class="card" data-cursor="Rakshak">
+        <div class="card__inner">
+          <div class="card__text">
+            <div class="card__top mono"><span>02</span><span class="tag">Hackathon build · Gemini</span></div>
+            <h3>Rakshak <span class="deva deva--sm">रक्षक</span></h3>
+            <p class="card__lede">Make the job prove itself.</p>
+            <p class="card__body">Lakhs of Nepalis leave for the Gulf every year. A lot of them get promised one thing on a voice note, then handed a contract that says something else, in a language they can't read. Rakshak takes the voice notes, chats, ads, contracts, receipts and visas and checks what was <em>promised</em> against what's actually on <em>paper</em>. You get one answer, read out loud in Nepali: STOP, CHECK, or MATCH.</p>
+            <dl class="card__facts">
+              <div><dt>Reads</dt><dd>Voice · photo · PDF · video</dd></div>
+              <div><dt>Shield</dt><dd>15 Nepal-specific rules</dd></div>
+              <div><dt>Every claim</dt><dd>Linked to quote, page or timestamp</dd></div>
+              <div><dt>Speaks</dt><dd>Nepali + English</dd></div>
+            </dl>
+            <a class="u-link card__link" href="https://github.com/limitlessneverdies/rakshak" target="_blank" rel="noopener">See the repo ↗</a>
+          </div>
+          <div class="card__media card__media--verdict">
+            <div class="verdict">
+              <div class="verdict__head mono"><span>case #QA-1400</span><span>4 sources</span></div>
+              <div class="verdict__row"><span class="mono muted">voice note · 00:41</span><span>"QAR <b>1,400</b>, 8 hours, no fee"</span></div>
+              <div class="verdict__row"><span class="mono muted">contract · p.2</span><span>QAR <b class="x">900</b>, <b class="x">12</b> hours</span></div>
+              <div class="verdict__row"><span class="mono muted">receipt</span><span>Rs <b class="x">1,70,000</b> fee paid</span></div>
+              <div class="verdict__row"><span class="mono muted">visa</span><span><b class="x">Visit</b> visa, not labour</span></div>
+              <div class="verdict__stop"><span>STOP</span><span class="deva">रोक्नुहोस्</span></div>
+              <p class="verdict__call mono">→ don't sign. call the helpline first.</p>
             </div>
           </div>
-          <div class="proj-badge b-hw">Hardware</div>
         </div>
-      </div>
-      <!-- P3 -->
-      <div class="card r">
-        <div class="proj">
-          <div>
-            <div class="proj-name">Course Recommendation Engine</div>
-            <div class="proj-desc">Matrix-based recommendation system in Python. 24 courses across 4 categories. Takes grade, interest, time, seriousness — outputs personalized picks. Discovered 2D arrays independently while learning.</div>
-            <div class="proj-tags">
-              <span class="ptag">Python</span>
-              <span class="ptag">2D Arrays</span>
-              <span class="ptag">Matrices</span>
-              <span class="ptag">Input Logic</span>
+      </article>
+
+      <article class="card card--ink" data-cursor="Alembic">
+        <div class="card__inner">
+          <div class="card__text">
+            <div class="card__top mono"><span>03</span><span class="tag">Reverse engineering · Rust</span></div>
+            <h3>Alembic, opened up</h3>
+            <p class="card__lede">I loved a chemistry game, so I took its engine apart.</p>
+            <p class="card__body">Alembic is a falling-sand sandbox where you play with the periodic table. Learning chemistry in it is amazing, but there was no way to add anything new. So I went through the shipped Rust binary piece by piece: every element, every reaction, the save format, the shaders. Then I wrote a spec so the game can load mods. Once you can add stuff, there's no ceiling on what it can teach.</p>
+            <dl class="card__facts">
+              <div><dt>Binary</dt><dd>6.7 MB rustc / macroquad</dd></div>
+              <div><dt>Strings pulled</dt><dd>119,871</dd></div>
+              <div><dt>Decoded</dt><dd>92 elements · 62 sim systems</dd></div>
+              <div><dt>Mapped</dt><dd>v6 save format, byte by byte</dd></div>
+            </dl>
+            <a class="u-link card__link" href="https://github.com/limitlessneverdies/alembic" target="_blank" rel="noopener">Read the teardown ↗</a>
+          </div>
+          <div class="card__media card__media--screen">
+            <img src="assets/alembic.webp" alt="Modded Alembic running at 60 fps: beakers of water and sand, molten metal in a crucible, a 141-substance palette and a chemistry log" width="1202" height="680" loading="lazy">
+          </div>
+        </div>
+      </article>
+
+      <article class="card card--acid" data-cursor="Lock in">
+        <div class="card__inner">
+          <div class="card__text">
+            <div class="card__top mono"><span>04</span><span class="tag">Windows · Electron → Rust + Tauri</span></div>
+            <h3>Focus Lock</h3>
+            <p class="card__lede">Willpower isn't a strategy. Friction is.</p>
+            <p class="card__body">You know the loop. Open the laptop to work, "just check" one tab, and suddenly three hours of YouTube are gone. So you sign a commitment, pick your days and pick your blocklist. After that, Alt+F4 doesn't work, Task Manager is gone, restarting just reopens it, and deleting it doesn't remove it. You chose this. Now you're stuck with it. The rebuild, MONOLITH, runs as a SYSTEM service, and the only way out early is a 5-stage cognitive test.</p>
+            <dl class="card__facts">
+              <div><dt>Survives</dt><dd>Restart · shutdown · uninstall</dd></div>
+              <div><dt>Blocks</dt><dd>Hosts file + app killer, every 2s</dd></div>
+              <div><dt>Swallows</dt><dd>Alt+F4 · Alt+Tab · Win · Ctrl+Shift+Esc</dd></div>
+              <div><dt>Early exit</dt><dd>Dual N-back → real problem → verify</dd></div>
+            </dl>
+            <div class="card__links"><a class="u-link card__link" href="https://github.com/limitlessneverdies/focus-lock" target="_blank" rel="noopener">focus-lock ↗</a><a class="u-link card__link" href="https://github.com/limitlessneverdies/monolith" target="_blank" rel="noopener">monolith ↗</a></div>
+          </div>
+          <div class="card__media card__media--lock">
+            <div class="lock">
+              <p class="mono lock__small">day 14 of 30 · signed by you</p>
+              <p class="lock__time mono" id="lockTime">47:12</p>
+              <p class="lock__quote">"You don't leave the session. The session leaves you."</p>
+              <button class="lock__esc mono" id="lockEsc" data-cursor="Good luck">try to escape →</button>
+              <p class="lock__nope mono" id="lockNope" aria-live="polite"></p>
+              <div class="lock__keys mono">
+                <span>Alt+F4</span><span>Alt+Tab</span><span>⊞ Win</span><span>Ctrl+Shift+Esc</span><span>youtube.com</span><span>instagram.com</span><span>x.com</span>
+              </div>
             </div>
           </div>
-          <div class="proj-badge b-sw">Software</div>
         </div>
-      </div>
-      <!-- P4 -->
-      <div class="card r">
-        <div class="proj">
-          <div>
-            <div class="proj-name">Smart Home Automation</div>
-            <div class="proj-desc">Arduino-based home automation with relay modules. Control lights and fans from a phone via custom web interface. Learned about relay switching, AC wiring basics, and web-to-hardware communication.</div>
-            <div class="proj-tags">
-              <span class="ptag">Arduino Mega</span>
-              <span class="ptag">Relay Module</span>
-              <span class="ptag">Web Interface</span>
-              <span class="ptag">WiFi</span>
-            </div>
+      </article>
+    </div>
+
+    <div class="tools">
+      <p class="label mono">also shipped</p>
+      <div class="tools__grid">
+        <a class="tool" href="https://github.com/limitlessneverdies/FocusTube" target="_blank" rel="noopener" data-cursor="Open">
+          <div class="tool__viz tool__viz--tube">
+            <div class="tube__timer mono">04:59 to pick</div>
+            <div class="tube__slots"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span></div>
+            <div class="tube__dead mono">/shorts → <s>gone</s></div>
           </div>
-          <div class="proj-badge b-iot">IoT</div>
-        </div>
-      </div>
-      <!-- P5 -->
-      <div class="card r">
-        <div class="proj">
-          <div>
-            <div class="proj-name">Self-Learning Experiments</div>
-            <div class="proj-desc">Tracked my own learning patterns. Juggling: 0 → 5 → 10 → 13 catches over 3 days. Proved step-function learning — struggle, plateau, regression, breakthrough. Nap was critical for consolidation.</div>
-            <div class="proj-tags">
-              <span class="ptag">Self-Experiment</span>
-              <span class="ptag">Motor Learning</span>
-              <span class="ptag">Data Tracking</span>
-              <span class="ptag">Step-Function</span>
-            </div>
+          <h4>FocusTube</h4>
+          <p>YouTube without the slot machine. Every morning you get 5 minutes to pick 5 videos, and that's all you can watch. Shorts are gone. Chrome extension + Android.</p>
+        </a>
+        <a class="tool" href="https://github.com/limitlessneverdies/pulseboard" target="_blank" rel="noopener" data-cursor="Open">
+          <div class="tool__viz tool__viz--pulse mono">
+            <div><span class="dim">06:00</span> MORNING BRIEFING</div>
+            <div><span class="o">HN</span> Show HN: a 4kb raytracer</div>
+            <div><span class="o">LO</span> why compilers are slow</div>
+            <div><span class="o">GH</span> trending ▲ 2.1k</div>
+            <div class="cur">_</div>
           </div>
-          <div class="proj-badge b-rs">Research</div>
+          <h4>PulseBoard</h4>
+          <p>RSS, Hacker News, Lobsters and GitHub Trending in one keyboard-first dashboard, with a broadcast-style morning briefing. No dependencies, nothing leaves your machine.</p>
+        </a>
+        <a class="tool" href="https://github.com/limitlessneverdies/LIMITLESS" target="_blank" rel="noopener" data-cursor="Open">
+          <div class="tool__viz tool__viz--prep">
+            <div class="prep__ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/><circle class="p" cx="50" cy="50" r="42"/></svg><span class="mono">day 23<br><b>/30</b></span></div>
+          </div>
+          <h4>LIMITLESS (prep)</h4>
+          <p>I built my own entrance-prep coach while studying for Mahanagar. It's every past paper and mock test I could find, plus Gemini reading the PDFs, built around getting you exam-ready in 30 days.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lab dark" id="lab">
+  <div class="lab__stage">
+    <canvas id="labCanvas" data-cursor="Touch the arc"></canvas>
+    <div class="lab__overlay">
+      <p class="label mono">05 / the lab</p>
+      <h2 class="lab__title">Built at home.<br><span class="acid">Most of it bit me first.</span></h2>
+      <p class="lab__hint mono">bring your cursor near the coil</p>
+    </div>
+  </div>
+  <div class="wrap lab__below">
+    <div class="lab__photos">
+      <figure class="ph ph--tall reveal-media"><img src="assets/tesla.webp" alt="Homemade Tesla coil with copper winding, held in hand outdoors" width="275" height="420" loading="lazy"><figcaption class="mono">Tesla coil · hand-wound secondary</figcaption></figure>
+      <figure class="ph ph--wide reveal-media"><img src="assets/electro.webp" alt="Homemade electrostatic generator made from a soda can and plastic bottles" width="625" height="285" loading="lazy"><figcaption class="mono">Van de Graaff · a soda can, bottles and patience</figcaption></figure>
+    </div>
+
+    <div class="gates">
+      <div class="gates__text">
+        <p class="label mono">right now</p>
+        <h3>Logic gates from scratch.</h3>
+        <p>No ICs, just transistors on a breadboard, because "the computer just does it" was never a good enough answer for me. Flip the inputs:</p>
+      </div>
+      <div class="gates__board" id="gates">
+        <div class="gates__ins">
+          <button class="sw mono" data-in="a" aria-pressed="false">A <b>0</b></button>
+          <button class="sw mono" data-in="b" aria-pressed="false">B <b>0</b></button>
+        </div>
+        <svg class="gates__wire" viewBox="0 0 300 140" aria-hidden="true">
+          <path id="wa" class="w" d="M0 35 H110 C130 35 130 52 150 52"/>
+          <path id="wb" class="w" d="M0 105 H110 C130 105 130 88 150 88"/>
+          <path class="g" d="M150 30 H185 A40 40 0 0 1 185 110 H150 Z"/>
+          <text id="gname" x="178" y="75" text-anchor="middle">AND</text>
+          <path id="wo" class="w" d="M225 70 H300"/>
+        </svg>
+        <div class="led" id="led"><i></i><span class="mono">OUT <b>0</b></span></div>
+        <div class="gates__ops mono">
+          <button data-op="AND" class="on">AND</button><button data-op="OR">OR</button><button data-op="XOR">XOR</button><button data-op="NAND">NAND</button>
         </div>
       </div>
     </div>
-  </section>
-</div>
+  </div>
+</section>
 
-<!-- SKILLS -->
-<div class="wrap">
-  <section class="sec" id="skills">
-    <div class="sec-hdr r">
-      <div class="sec-label">04 — Stack</div>
-      <div class="sec-title">Skills</div>
+<section class="casefile" id="casefile">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">Case file</h2>
+      <p class="section-side reveal">The most fun I've had breaking something. I didn't publish the exploit.</p>
     </div>
-    <div class="sk-grid">
-      <div class="card r" style="--w:75%">
-        <div class="sk-icon">🔧</div>
-        <div class="sk-name">Hardware & Electronics</div>
-        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
-        <div class="sk-desc">ESP32, Arduino, motor drivers, soldering, multimeter, circuit debugging, sensor integration</div>
-      </div>
-      <div class="card r" style="--w:68%">
-        <div class="sk-icon">🐍</div>
-        <div class="sk-name">Python</div>
-        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
-        <div class="sk-desc">Variables, loops, conditionals, 2D arrays, matrices, input handling, API basics</div>
-      </div>
-      <div class="card r" style="--w:60%">
-        <div class="sk-icon">⚡</div>
-        <div class="sk-name">C++ / Arduino</div>
-        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
-        <div class="sk-desc">GPIO control, motor protocols, serial communication, sensor libraries, basic embedded</div>
-      </div>
-      <div class="card r" style="--w:55%">
-        <div class="sk-icon">🌐</div>
-        <div class="sk-name">Web Basics</div>
-        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
-        <div class="sk-desc">HTML/CSS, ESP32 web servers, browser-based control, responsive interfaces</div>
-      </div>
-      <div class="card r" style="--w:45%">
-        <div class="sk-icon">🧠</div>
-        <div class="sk-name">AI & APIs</div>
-        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
-        <div class="sk-desc">Gemini Flash API, OpenAI API, AI embedding research, using AI for coding help</div>
-      </div>
-      <div class="card r" style="--w:85%">
-        <div class="sk-icon">🛠️</div>
-        <div class="sk-name">Problem Solving</div>
-        <div class="sk-bar-bg"><div class="sk-bar"></div></div>
-        <div class="sk-desc">Debugging, first-principles thinking, rapid prototyping, learning from failure, iteration</div>
+    <div class="file reveal">
+      <div class="file__head mono"><span>PM-01 · responsible disclosure</span><span>status: <b class="ok">FIXED</b></span></div>
+      <div class="file__strike" aria-hidden="true"><span class="from">Rs 9,000</span><span class="arrow">→</span><span class="to">Rs 0</span></div>
+      <div class="file__grid">
+        <div><p class="mono muted">target</p><p>Padhai Mantra, one of Nepal's biggest education platforms</p></div>
+        <div><p class="mono muted">bug</p><p>Payment logic. A Rs 9,000 course could be unlocked for Rs 0.</p></div>
+        <div><p class="mono muted">what I did</p><p>Found it, wrote it up, and reported it privately. Then I worked with their team until it was fixed.</p></div>
+        <div><p class="mono muted">what I didn't</p><p>Use it, share it, or post a "how to" video about it.</p></div>
       </div>
     </div>
-  </section>
-</div>
+  </div>
+</section>
 
-<!-- CERTS -->
-<div class="wrap">
-  <section class="sec" id="certs">
-    <div class="sec-hdr r">
-      <div class="sec-label">05 — Credentials</div>
-      <div class="sec-title">Certs & Learning</div>
+<section class="journey" id="journey">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="section-title">Journey</h2>
+      <p class="section-side reveal">Robots, then circuits, then code. Mostly in that order.</p>
     </div>
-    <div class="cert-grid">
-      <div class="cert r">
-        <div class="cert-dot cd-d"></div>
-        <div class="cert-info">
-          <div class="cert-name">CS50: Intro to Computer Science</div>
-          <div class="cert-src">Harvard — edX</div>
-        </div>
-        <div class="cert-st">Done</div>
-      </div>
-      <div class="cert r">
-        <div class="cert-dot cd-p"></div>
-        <div class="cert-info">
-          <div class="cert-name">Python for Everybody</div>
-          <div class="cert-src">U of Michigan — Coursera</div>
-        </div>
-        <div class="cert-st">Active</div>
-      </div>
-      <div class="cert r">
-        <div class="cert-dot cd-p"></div>
-        <div class="cert-info">
-          <div class="cert-name">Arduino Programming</div>
-          <div class="cert-src">Microsoft Learn</div>
-        </div>
-        <div class="cert-st">Active</div>
-      </div>
-      <div class="cert r">
-        <div class="cert-dot cd-q"></div>
-        <div class="cert-info">
-          <div class="cert-name">Intro to Electronics</div>
-          <div class="cert-src">Khan Academy</div>
-        </div>
-        <div class="cert-st">Queued</div>
-      </div>
-      <div class="cert r">
-        <div class="cert-dot cd-q"></div>
-        <div class="cert-info">
-          <div class="cert-name">Scientific Computing w/ Python</div>
-          <div class="cert-src">freeCodeCamp</div>
-        </div>
-        <div class="cert-st">Queued</div>
-      </div>
-      <div class="cert r">
-        <div class="cert-dot cd-q"></div>
-        <div class="cert-info">
-          <div class="cert-name">Raspberry Pi Physical Computing</div>
-          <div class="cert-src">Raspberry Pi Foundation</div>
-        </div>
-        <div class="cert-st">Queued</div>
-      </div>
+    <ol class="timeline">
+      <li class="reveal"><span class="mono t">Class 6</span><div><h4>Hydraulic arm</h4><p>Syringes, tubes and cardboard. Totally dumb, and the start of everything.</p></div></li>
+      <li class="reveal"><span class="mono t">Class 9</span><div><h4>Walking, talking AI robot</h4><p>It walked, and it answered back. Sometimes in the right order.</p></div></li>
+      <li class="reveal"><span class="mono t">At home</span><div><h4>Tesla coil &amp; Van de Graaff</h4><p>High voltage, low budget. Physics I could feel on my arm hair.</p></div></li>
+      <li class="reveal"><span class="mono t">SEE</span><div><h4>3.90 GPA, then a scholarship</h4><p>Built my own prep app on the way. Class topper, though I care more about the why.</p></div></li>
+      <li class="reveal"><span class="mono t">Internship</span><div><h4>Quick Enterprises</h4><p>Software engineering intern. First time my code ran for people who weren't me.</p></div></li>
+      <li class="reveal"><span class="mono t">Class 11</span><div><h4>KMC Robotics Club</h4><p>Science stream at KMC. Logic gates from transistors on the side.</p></div></li>
+      <li class="reveal"><span class="mono t">Hackathons</span><div><h4>5+ entered, 1 won</h4><p>Latest: Prime College Hackathon. Rakshak was built under hackathon pressure.</p></div></li>
+      <li class="reveal now"><span class="mono t">Now</span><div><h4>NexPay</h4><p>Making money move without the internet. Co-building with Jitesh Prakash Chaudhary.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="contact dark" id="contact">
+  <div class="wrap">
+    <p class="label mono">06 / contact</p>
+    <h2 class="contact__big"><a href="mailto:limitlessneverdies369@gmail.com" data-cursor="Write">Got a problem that <span class="acid">shouldn't</span> be solvable?</a></h2>
+    <p class="contact__open mono"><span class="dot"></span>open to: internships · hackathon teams · hardware problems nobody wants</p>
+    <div class="contact__row">
+      <a class="pill pill--acid" href="mailto:limitlessneverdies369@gmail.com"><span class="roll"><span>limitlessneverdies369@gmail.com</span><span aria-hidden="true">limitlessneverdies369@gmail.com</span></span></a>
+      <a class="u-link" href="https://github.com/limitlessneverdies" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="u-link" href="https://www.linkedin.com/in/bishowdeep-bhusal-371308445/" target="_blank" rel="noopener">LinkedIn ↗</a>
     </div>
-  </section>
-</div>
+  </div>
+  <footer class="foot mono">
+    <span>© 2026 Bishowdeep Bhusal</span>
+    <span>Hand-coded. No templates, no builders. Type "limitless" anywhere.</span>
+    <span class="deva">सीमा छैन</span>
+  </footer>
+  <div class="giant" aria-hidden="true">LIMITLESS</div>
+</section>
 
-<!-- CONTACT -->
-<div class="wrap">
-  <section class="contact">
-    <h2 class="r">Ready to build<br>something real.</h2>
-    <p class="r">Always looking for the next challenge. If it involves building, learning, or breaking things to understand them — I'm in.</p>
-    <a href="mailto:limitlessneverdies369@gmail.com" class="cta r">Get In Touch →</a>
-  </section>
-</div>
+</main>
 
-<footer class="foot">
-  <div>Bishowdeep Bhusal</div>
-  <div>Built with curiosity</div>
-</footer>
-
-<script>
-// Reveal
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:.1});
-document.querySelectorAll('.r').forEach(el=>obs.observe(el));
-
-// Counters
-function count(el){
-  const t=+el.dataset.count,p=el.dataset.prefix||'';
-  const s=performance.now();
-  (function u(n){
-    const pr=Math.min((n-s)/1400,1);
-    const e=1-Math.pow(1-pr,3);
-    el.textContent=p+Math.round(t*e).toLocaleString();
-    if(pr<1)requestAnimationFrame(u);
-  })(s);
-}
-const co=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){count(x.target);co.unobserve(x.target)}})},{threshold:.5});
-document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
-
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
-  });
-});
-</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="main.js"></script>
+<script type="module" src="lab.js"></script>
 </body>
 </html>
