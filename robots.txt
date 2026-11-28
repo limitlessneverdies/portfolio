@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bishowdeep.pages.dev/sitemap.xml
+Sitemap: https://bishowdeepbhusal.com.np/sitemap.xml
